@@ -82,3 +82,4 @@ PlatformSpecifics/Windows/*.rc
 .vscode
 build
 install
+install-qt4
