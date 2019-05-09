@@ -92,8 +92,8 @@ ENDIF()
 
 PROJECT(osgQt)
 
-FIND_PACKAGE(OpenSceneGraph 3.6.0 REQUIRED osgDB osgGA osgUtil osgText osgViewer osgWidget)
-SET(OPENSCENEGRAPH_SOVERSION 145)
+FIND_PACKAGE(OpenSceneGraph 3.6.3 REQUIRED osgDB osgGA osgUtil osgText osgViewer osgWidget)
+SET(OPENSCENEGRAPH_SOVERSION 158)
 
 SET(OSG_PLUGINS osgPlugins-${OPENSCENEGRAPH_VERSION})
 
