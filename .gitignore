@@ -79,13 +79,7 @@ PlatformSpecifics/Windows/*.rc
 *.sdf
 *.opensdf
 
-<<<<<<< HEAD
 build
 install
 install-qt4
 .vscode
-=======
-.vscode
-build
-install
->>>>>>> d4ce2b5f7c116c59cadb157546eff639f06b2c8c
