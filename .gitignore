@@ -78,3 +78,8 @@ PlatformSpecifics/Windows/*.rc
 # Visual Studio - Browsing Database File
 *.sdf
 *.opensdf
+
+build
+install
+install-qt4
+.vscode
