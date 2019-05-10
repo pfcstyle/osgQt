@@ -6,7 +6,7 @@ ELSE()
 ENDIF()
 
 IF ( Qt5Widgets_FOUND )
-    SET(LIB_NAME osgQt5)
+    SET(LIB_NAME osgQt)
     SET(HEADER_INSTALL_DIR osgQt)
 ELSE()
     SET(LIB_NAME osgQt)
