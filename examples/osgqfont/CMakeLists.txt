@@ -9,11 +9,8 @@ IF ( NOT Qt5Widgets_FOUND )
 ENDIF()
 
 #### end var setup  ###
-IF ( Qt5Widgets_FOUND )
-    SET ( EXAMPLE_NAME osgqfont-qt5 )
-ELSE()
-    SET ( EXAMPLE_NAME osgqfont )
-ENDIF()
+SET ( EXAMPLE_NAME osgqfont )
+
 SETUP_EXAMPLE(${EXAMPLE_NAME})
 
 IF ( Qt5Widgets_FOUND )

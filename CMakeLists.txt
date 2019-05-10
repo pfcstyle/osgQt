@@ -64,7 +64,16 @@ IF(APPLE)
     # and 32/64-bit Intel/PPC on >= 10.5. Anything <= 10.3 doesn't support.
     # These are set the first time CMake is run, and can be changed by
     # the user at any time.
-    IF(OSG_OSX_VERSION VERSION_GREATER 10.8)
+    # Set macOS architectures for Universal Binaries.
+    IF(OSG_OSX_VERSION VERSION_GREATER_EQUAL 10.14)
+        message(STATUS "HELLO I'M OK")
+        # x86_64 only
+        SET(CMAKE_OSX_ARCHITECTURES "x86_64" CACHE STRING "Build architectures for OSX")
+        SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Target OSX version")
+        # libstdc++ is no longer supported
+        SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
+        SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
+    ELSEIF(OSG_OSX_VERSION VERSION_GREATER 10.8)
       # 64 Bit Works, i386,ppc is not supported any more
       SET(CMAKE_OSX_ARCHITECTURES "x86_64" CACHE STRING "Build architectures for OSX")
       SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.10" CACHE STRING "Target OSX version")
@@ -561,7 +570,6 @@ SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} CACHE STRING "You may add additiona
 # This is unofficial so this may be removed or changed at anytime.
 SET(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} CACHE STRING "(EXPERIMENTAL) You may add additional search paths here. Use ; to separate multiple paths.")
 
-
 # This is for an advanced option to give aggressive warnings
 # under different compilers. If yours is not implemented, this option
 # will not be made available.
@@ -590,8 +598,8 @@ ELSEIF(MSVC)
         #C4100 'identifier' : unreferenced formal parameter
         #C4127 Error Message conditional expression is constant
         #C4706 assignment within conditional expression
-        SET(OSG_AGGRESSIVE_WARNING_FLAGS /W4 /wd4706 /wd4127 /wd4100)
-ELSEIF(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        SET(OSG_AGGRESSIVE_WARNING_FLAGS /W4 /wd4706 /wd4127 /wd4100 /wd4430)
+ELSEIF(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
         SET(OSG_AGGRESSIVE_WARNING_FLAGS  -Wall -Wparentheses -Wno-long-long -Wno-import -pedantic -Wreturn-type -Wmissing-braces -Wunknown-pragmas -Wunused -Wno-overloaded-virtual)
 
         # CMake lacks an elseif, so other non-gcc, non-VS compilers need
@@ -618,9 +626,11 @@ ELSEIF(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
                     set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libstdc++")
                     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++98 -stdlib=libstdc++")
                 ELSE()
+                    
                     set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
                     set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
                     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
+                    
                 ENDIF()
             ENDIF()
 
@@ -728,6 +738,7 @@ IF(APPLE)
         # Seems like a good place to add version specific compiler flags too.
         IF(NOT OSG_CONFIG_HAS_BEEN_RUN_BEFORE)
           IF(OSG_OSX_VERSION VERSION_GREATER 10.7)
+            MESSAGE(STATUS "??????WHAT HAPPEND?: ${CMAKE_CXX_FLAGS}")
             SET(OSG_DEFAULT_IMAGE_PLUGIN_FOR_OSX "imageio" CACHE STRING "Forced imageio default image plugin for OSX" FORCE)
             SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden" CACHE STRING "Flags used by the compiler during all build types." FORCE)
           ELSEIF(OSG_OSX_VERSION VERSION_EQUAL 10.7)
